@@ -1,0 +1,34 @@
+Historia-kubernets:
+  - Criado pela Google: "projeto borg"
+  - Nomeclatura: "K8s"
+Componentes:
+  - Conteiner Engine: "Cara responsavel que o container tenha rede tenha storage, tenha toda a organização necessaria para funcionar "
+    - Conteiner Runtime: "cara especializa em se comunicar com o kernel, ele executar os containers"
+K8s:
+  - namespace: forma de isolar
+  - Cluster: Conjunto de nós que executam os containers/pods
+  - Nodes: Um tipo de maquina que roda os containers/pods
+  - Pods: São literalmente os conteiners que rodam na estrutura
+  - Deployment: É um dos principais controllers utilizados. O Deployment, em conjunto com o ReplicaSet, garante que determinado número de réplicas de um pod esteja em execução nos nós workers do cluster. Além disso, o Deployment também é responsável por gerenciar o ciclo de vida das aplicações, onde características associadas a aplicação, tais como imagem, porta, volumes e variáveis de ambiente, podem ser especificados em arquivos do tipo yaml ou json para posteriormente serem passados como parâmetro para o kubectl executar o deployment. Esta ação pode ser executada tanto para criação quanto para atualização e remoção do deployment;
+  - ReplicaSets: É um objeto responsável por garantir a quantidade de pods em execução no nó;
+  - Services: É uma forma de você expor a comunicação através de um ClusterIP, NodePort ou LoadBalancer para distribuir as requisições entre os diversos Pods daquele Deployment. Funciona como um balanceador de carga.
+  - Control-plane: Tudo aquilo que existe para gerenciar nossos workers
+    - Componentes: ETCD(guarda todo o estado *critico*), kube scheduler(gerenciamento de agendamento e controle dos novos *tudo*), kube controller manager, kube api server
+  - workers: o trabalhador, oque realizar todos os trabalhos 
+    - Componentes: Kubelet(agente do nó), kube proxy
+Ferramentas:
+ - Kind: Uma ferramenta para execução de contêineres Docker que simulam o funcionamento de um cluster Kubernetes. É utilizado para fins didáticos, de desenvolvimento e testes. O Kind não deve ser utilizado para produção
+    - comandos:
+      - criar cluster normal: kind create cluster --name nomedocluster
+      - criar com configs: kind create cluster --name nomedocluster --config meu-primeiro-cluster.yml
+      - ver os clusters ativos: kind get clusters
+ - kubctl: Ferramenta que conecta com API do k8s
+Mao-na-massa: Criar um cluster atraves de um arquivo de config
+  - comandos-usados: kind create cluster --name giropops-multinode --config primeiro-cluster.yml  #Cria um cluster baseado no manifesto
+                     kubectl cluster-info --context kind-giropops-multinode #mostra as informacoes do cluster criado
+                     kubectl get nodes #mostra os nós existentes
+                     k get pods -A -o wide #mostra os pods ou nós com decricao e outputs
+                     k run nginx --image nginx #roda um pod,nesse caso com image nginx
+                     k describe pods nginx #descreve por completo o pod
+                     k exec -ti nginx -- bash #executa dentro do pod o shell do nginx
+                     k exposed #cria um service para o pod
